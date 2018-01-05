@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+	<head>
+		<script	  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+				  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+				  crossorigin="anonymous"></script>
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-static-top">
+		  <div class="container">
+		   <button type="button" class="btn btn-default navbar-btn" onclick="startTest()" id="btnStartStop">Start</button>
+		  </div>
+		</nav>
+		 <div class="row">
+		 <div class="col-md-2 col-centered text-center" >
+		 	<div id="counter" style="" class="figure">
+		 	</div>
+		 	<div id="conSquare" style="display:none" class="figure">
+ 				<canvas id="square" width="500" height="500"></canvas>
+		 	</div>
+
+		 	<div id="conTriangle" style="display:none" class="figure">
+ 				<canvas id="triangle" width="500" height="500"></canvas>
+		 	</div>
+
+		 	<div id="conCircle" style="display:none" class="figure">
+ 				<canvas id="circle" width="500" height="500"></canvas>
+		 	</div>
+
+		 </div>
+		 </div>
+
+	</body>
+	<script type="text/javascript">
+		timers = {"duracion": 10,
+				  "temporizador": 1,
+				  "contador": null,
+				  "cuentaRegresiva": 5	
+				 };
+				 console.log(timers.duracion);
+
+
+		function showStep(step){
+			$(".figure").hide();
+			switch(step){
+				case 1:
+				$("#conSquare").show();
+				break;
+				case 2:
+				$("#conTriangle").show();
+				break;
+				case 3:
+				$("#conCircle").show();
+				break;
+				case 4:
+				//$("#counter").html(step);
+				break;
+			}
+		}
+		function _start(){
+			$("#counter").html("Start");	
+
+			timers.contador = setInterval(function(){
+					timers.duracion = timers.duracion - 1;
+					console.log(timers.duracion);
+					if(timers.duracion == 0) {
+	            		stop();
+	            		return;
+	                }
+
+					timers.temporizador = timers.temporizador + 1 ;
+					if ( timers.temporizador == 4) {
+						showStep(4);
+						timers.temporizador = 0;
+						return;
+					}
+					if ( timers.temporizador == 3) {
+						showStep(3);
+						return;
+					}
+					if ( timers.temporizador == 2) {
+						showStep(2);
+						return;
+					}
+					if ( timers.temporizador == 1 ) {
+						showStep(1);
+						return;
+					}
+			
+		        }, 2000);
+		}
+
+		timeCounterA = 5;
+
+		function stop(){
+			$("#btnStartStop").text("Start");
+    		clearInterval(timers.contador);
+    		timers.duracion = 10;
+			timers.temporizador = 1;
+			timeCounterA = 5;
+		}
+
+		function startTest(){
+			if($("#btnStartStop").text() == "Stop"){
+				stop();
+				return;
+			}
+			$("#btnStartStop").text("Stop");
+			$("#counter").show();
+			
+		
+			timers.contador = setInterval(function(){
+	                $("#counter").html(timeCounterA);
+	                timeCounterA = timeCounterA - 1;
+	                if (timeCounterA < 0) {
+	                	 clearInterval(timers.contador);
+	                	 _start();
+	                }
+	        }, 1000);	
+		}
+		
+		var c=document.getElementById("square");
+		var ctx=c.getContext("2d");
+		ctx.rect(20,20,300,300);
+		ctx.fill(); 
+
+
+		var c=document.getElementById("triangle");
+		var ctx=c.getContext("2d");
+		ctx.beginPath();
+		ctx.moveTo(250, 1);
+    	ctx.lineTo(1, 250);
+    	ctx.lineTo(500, 250);
+		ctx.fillStyle = "#FFCC00";
+		ctx.fill(); 
+
+		var c=document.getElementById("circle");
+		var ctx=c.getContext("2d");
+		ctx.beginPath();
+		ctx.moveTo(250, 250);
+		ctx.arc(100,75,200,0,2*Math.PI);
+		ctx.fillStyle = "#CCCCCC";
+		ctx.fill(); 
+
+
+
+	</script>
+</html>

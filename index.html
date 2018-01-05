@@ -5,6 +5,17 @@
 				  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
 				  crossorigin="anonymous"></script>
 		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+
+	<style>
+		.col-center {
+		   float: none;
+		   margin-right: auto;
+		   margin-left: auto;
+		}  
+	</style>
+
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-static-top">
@@ -12,23 +23,32 @@
 		   <button type="button" class="btn btn-default navbar-btn" onclick="startTest()" id="btnStartStop">Start</button>
 		  </div>
 		</nav>
-		 <div class="row">
-		 <div class="col-md-2 col-centered text-center" >
-		 	<div id="counter" style="" class="figure">
-		 	</div>
-		 	<div id="conSquare" style="display:none" class="figure">
- 				<canvas id="square" width="500" height="500"></canvas>
-		 	</div>
+		<div class='container'>
+			 <div class="row">
+				 <div class="col-md-6 col-center" >
+				 	<div id="counter" style="" class="figure">
+				 	aaaaaaaaaaaaaa2
+				 	</div>
+				 	<div id="conSquare" style="display:none" class="figure">
+		 				<canvas id="square" width="500" height="500"></canvas>
+				 	</div>
 
-		 	<div id="conTriangle" style="display:none" class="figure">
- 				<canvas id="triangle" width="500" height="500"></canvas>
-		 	</div>
+				 	<div id="conTriangle" style="display:none" class="figure">
+		 				<canvas id="triangle" width="500" height="500"></canvas>
+				 	</div>
 
-		 	<div id="conCircle" style="display:none" class="figure">
- 				<canvas id="circle" width="500" height="500"></canvas>
-		 	</div>
+				 	<div id="conCircle" style="display:none" class="figure">
+		 				<canvas id="circle" width="500" height="500"></canvas>
+				 	</div>
 
-		 </div>
+				 	<div id="conSonido" style="display:none" class="figure">
+		 				<audio id="audio" >
+							   <source src="nautical008.mp3" type="audio/mp3" />
+						</audio>
+				 	</div>
+
+				 </div>
+			 </div>
 		 </div>
 
 	</body>
@@ -54,12 +74,13 @@
 				$("#conCircle").show();
 				break;
 				case 4:
-				//$("#counter").html(step);
+				$('#audio')[0].play();
+				//$(“#audio”)[0].pause(); 
 				break;
 			}
 		}
 		function _start(){
-			$("#counter").html("Start");	
+			$("#counter").html("Start...");	
 
 			timers.contador = setInterval(function(){
 					timers.duracion = timers.duracion - 1;
@@ -91,14 +112,12 @@
 		        }, 2000);
 		}
 
-		timeCounterA = 5;
-
 		function stop(){
 			$("#btnStartStop").text("Start");
     		clearInterval(timers.contador);
     		timers.duracion = 10;
 			timers.temporizador = 1;
-			timeCounterA = 5;
+			timers.cuentaRegresiva = 5;
 		}
 
 		function startTest(){
@@ -107,13 +126,14 @@
 				return;
 			}
 			$("#btnStartStop").text("Stop");
+			$(".figure").hide();
 			$("#counter").show();
 			
 		
 			timers.contador = setInterval(function(){
-	                $("#counter").html(timeCounterA);
-	                timeCounterA = timeCounterA - 1;
-	                if (timeCounterA < 0) {
+	                $("#counter").html(timers.cuentaRegresiva);
+	                timers.cuentaRegresiva = timers.cuentaRegresiva - 1;
+	                if (timers.cuentaRegresiva < 0) {
 	                	 clearInterval(timers.contador);
 	                	 _start();
 	                }
@@ -139,7 +159,7 @@
 		var ctx=c.getContext("2d");
 		ctx.beginPath();
 		ctx.moveTo(250, 250);
-		ctx.arc(100,75,200,0,2*Math.PI);
+		ctx.arc(250,250,200,0,2*Math.PI);
 		ctx.fillStyle = "#CCCCCC";
 		ctx.fill(); 
 
